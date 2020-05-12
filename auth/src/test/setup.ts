@@ -1,7 +1,16 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { app } from '../app';
+import request from 'supertest';
 
+//declare signup function a global helper for testing
+declare global {
+  namespace NodeJS {
+    interface Global {
+      signup(): Promise<string[]>;
+    }
+  }
+}
 // declare so each hook has access
 let mongo: any;
 // hook function run before all tests
@@ -29,3 +38,15 @@ afterAll(async () => {
   await mongo.stop();
   await mongoose.connection.close();
 });
+
+global.signup = async () => {
+  const authResponse = await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@test.com',
+      password: 'password',
+    })
+    .expect(201);
+  const cookie = authResponse.get('Set-Cookie');
+  return cookie;
+};

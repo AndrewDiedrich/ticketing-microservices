@@ -1,0 +1,17 @@
+node_modules/
+.next/
+dist/
+logs/
+*.pid
+
+*.key
+*.crt
+*.csr
+*.pem
+*.srl
+.env
+
+
+.DS_Store
+
+yarn.lock
