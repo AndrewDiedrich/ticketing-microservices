@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: andrew/client
+          image: andrewdiedrich/client
 ---
 apiVersion: v1
 kind: Service
@@ -25,6 +25,6 @@ spec:
     app: client
   ports:
     - name: client
-      protocal: TCP
+      protocol: TCP
       port: 3000
       targetPort: 3000

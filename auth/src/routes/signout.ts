@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/users/signout', async (req, res) => {
+router.post('/api/users/signout', async (req, res) => {
   req.session = null;
   res.send({});
 });

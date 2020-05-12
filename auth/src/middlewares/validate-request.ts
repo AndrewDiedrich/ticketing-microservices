@@ -3,7 +3,6 @@ import { validationResult } from 'express-validator';
 import { RequestValidationError } from '../errors/request-validation-errors';
 
 export const validateRequest = (
-  err: Error,
   req: Request,
   res: Response,
   next: NextFunction

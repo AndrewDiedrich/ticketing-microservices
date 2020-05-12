@@ -8,9 +8,9 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { NotFoundError } from './errors/not-found-error';
 //middlewares
 import { errorHandler } from './middlewares/error-handler';
+import { NotFoundError } from './errors/not-found-error';
 
 const app = express();
 app.set('trust proxy', true);
@@ -22,10 +22,10 @@ app.use(
   })
 );
 
-app.use('/api', currentUserRouter);
-app.use('/api', signinRouter);
-app.use('/api', signoutRouter);
-app.use('/api', signupRouter);
+app.use(currentUserRouter);
+app.use(signinRouter);
+app.use(signoutRouter);
+app.use(signupRouter);
 
 // route not found error
 app.all('*', async (req, res) => {
