@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/next": "^9.0.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "next": "^9.4.0",
