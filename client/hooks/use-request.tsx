@@ -1,12 +1,21 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-export default ({ url, method, body, onSuccess }) => {
-  const [errors, setErrors] = useState(null);
+interface IRequestTypes {
+  url: string;
+  method: string;
+  body: any;
+  onSuccess: any;
+}
+
+export default ({ url, method, body, onSuccess }: IRequestTypes) => {
+  //@ts-ignore
+  const [errors, setErrors] = useState<HTMLDivElement>(null);
 
   const doRequest = async () => {
     try {
       setErrors(null);
+      // @ts-ignore
       const response = await axios[method](url, body);
 
       // after a successful response
@@ -20,7 +29,7 @@ export default ({ url, method, body, onSuccess }) => {
         <div className="alert alert-danger">
           <h4>Ooops.....</h4>
           <ul className="my-0">
-            {err.response?.data.errors.map((err) => (
+            {err.response?.data.errors.map((err: any) => (
               <li key={err.message}>{err.message}</li>
             ))}
           </ul>

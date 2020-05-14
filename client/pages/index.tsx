@@ -1,29 +1,22 @@
-import axios from 'axios';
+import buildClient from '../api/build-client';
+import { NextPageContext } from 'next';
 
-const LandingPage = ({ currentuser }) => {
-  console.log(currentuser);
-  return <h1>home page: </h1>;
+const LandingPage = ({ currentUser }: any) => {
+  return currentUser ? (
+    <h1>You are signed in: {currentUser}</h1>
+  ) : (
+    <h1>You are not signed in </h1>
+  );
 };
 
 // ssr
-LandingPage.getInitialProps = async () => {
-  if (typeof window === 'undefined') {
-    //
-    const { data } = await axios.get(
-      `http:/ingress-nginx.ingress-nginx.svc.cluster.local/api/users/currentuser`,
-      {
-        headers: {
-          Host: 'ticketing.dev',
-        },
-      }
-    );
-    return data;
-  } else {
-    // we are on the browser
-    // base url can be ''
-    const { data } = await axios.get(`/api/users/currentuser`);
-    return data;
-  }
+LandingPage.getInitialProps = async (context: NextPageContext) => {
+  console.log('Landing Page!!!');
+  // create client
+  const client = buildClient(context);
+  //call get
+  const { data } = await client.get(`/api/users/currentuser`);
+  return data;
 };
 
 export default LandingPage;
