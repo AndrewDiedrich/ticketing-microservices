@@ -1,15 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import buildClient from '../api/build-client';
+import buildClient from '@/api/build-client';
 import Header from '../components/header';
-
 import { AppProps } from 'next/app';
 
 // wrapper around all pages
 
-const AppComponent = (
-  { currentUser }: any,
-  { Component, pageProps }: AppProps
-) => {
+const AppComponent = ({ currentUser, Component, pageProps }: any) => {
   return (
     <div>
       <Header currentUser={currentUser} />

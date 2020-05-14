@@ -9,8 +9,7 @@ interface IRequestTypes {
 }
 
 export default ({ url, method, body, onSuccess }: IRequestTypes) => {
-  //@ts-ignore
-  const [errors, setErrors] = useState<HTMLDivElement>(null);
+  const [errors, setErrors] = useState<any>(null);
 
   const doRequest = async () => {
     try {

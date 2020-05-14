@@ -17,6 +17,7 @@ export default () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    console.log('submit signin', e, email, password);
     await doRequest();
   };
 
@@ -24,16 +25,15 @@ export default () => {
     <form onSubmit={onSubmit}>
       <h1>Sign In</h1>
       <div className="form-group">
-        <label htmlFor="">Email Address</label>
+        <label>Email Address</label>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          type="text"
           className="form-control"
         />
       </div>
       <div className="form-group">
-        <label htmlFor="">Password</label>
+        <label>Password</label>
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -42,8 +42,7 @@ export default () => {
         />
       </div>
       {errors}
-
-      <button className="btn btn-primary">Sing In</button>
+      <button className="btn btn-primary">Sign In</button>
     </form>
   );
 };
