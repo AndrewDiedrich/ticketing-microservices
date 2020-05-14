@@ -6,7 +6,7 @@ const start = async () => {
     throw new Error('JWT_KEY must be definded');
   }
   if (!process.env.MONGO_URI) {
-    throw new Error('auth MONGO_URI must be definded');
+    throw new Error('tickets MONGO_URI must be definded');
   }
 
   try {
@@ -15,7 +15,7 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log('connected to auth mongodb');
+    console.log('connected to tickets mongodb');
   } catch (err) {
     console.error(err);
   }

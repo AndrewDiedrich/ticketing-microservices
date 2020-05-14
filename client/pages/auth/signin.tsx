@@ -17,7 +17,6 @@ export default () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    console.log('submit signin', e, email, password);
     await doRequest();
   };
 
