@@ -7,7 +7,7 @@ import request from 'supertest';
 declare global {
   namespace NodeJS {
     interface Global {
-      signup(): Promise<string[]>;
+      signin(): Promise<string[]>;
     }
   }
 }
@@ -39,7 +39,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signup = async () => {
+global.signin = async () => {
   const authResponse = await request(app)
     .post('/api/users/signup')
     .send({
