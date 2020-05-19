@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app';
-
+import { natsWrapper } from './nats-wrapper';
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be definded');
@@ -10,12 +10,23 @@ const start = async () => {
   }
 
   try {
+    //cluster id in nats depl file CID
+    await natsWrapper.connect('ticketing', 'asdff', 'http://nats-srv:4222');
+    // gracefully close nats if shutdown or interupted
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed');
+      process.exit();
+    });
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
+    // connect to mongo
+    console.log(process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log('connected to tickets mongodb');
+    console.log('Connected to Tickets MongoDb');
   } catch (err) {
     console.error(err);
   }

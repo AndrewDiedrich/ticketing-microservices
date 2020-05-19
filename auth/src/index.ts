@@ -15,7 +15,7 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log('connected to auth mongodb');
+    console.log('Connected to Auth mongodb');
   } catch (err) {
     console.error(err);
   }

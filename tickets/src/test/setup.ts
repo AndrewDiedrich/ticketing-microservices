@@ -12,6 +12,10 @@ declare global {
     }
   }
 }
+
+// all tests use mock of nats wrapper before tests
+jest.mock('../nats-wrapper');
+
 // declare so each hook has access
 let mongo: any;
 // hook function run before all tests
@@ -28,6 +32,7 @@ beforeAll(async () => {
 
 // run before each test, delete all collections
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
   for (let collection of collections) {
     await collection.deleteMany({});
