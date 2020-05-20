@@ -1,7 +1,17 @@
 import mongoose from 'mongoose';
 import express, { Request, Response } from 'express';
-import { requireAuth, validateRequest } from '@andrewdied-tickets/common';
+import {
+  requireAuth,
+  validateRequest,
+  NotFoundError,
+  BadRequestError,
+  OrderStatus,
+} from '@andrewdied-tickets/common';
 import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
+import { Order } from '../models/order';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -17,7 +27,44 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.send({});
+    const { ticketId } = req.body;
+    // find ticket user is trying to order in database
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket) {
+      throw new NotFoundError();
+    }
+    // make sure ticket isn't already reserved
+    // run query to look at all orders and find order where
+    // the ticket is the ticket we just found *and* the orders status is *not*
+    // cancelled. if we find an order, that means ticket is reserved
+    const isReserved = await ticket.isReserved();
+    if (isReserved) {
+      throw new BadRequestError('Ticket is already reserved');
+    }
+    // Calculate expiration date/time for this order
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + 15 * 60);
+    // Build the order and save it to the database
+    const order = Order.build({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      ticket,
+    });
+    await order.save();
+    // publish an event saying that an order was created
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
+
+    res.status(201).send(order);
   }
 );
 

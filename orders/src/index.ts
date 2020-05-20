@@ -6,16 +6,16 @@ const start = async () => {
     throw new Error('JWT_KEY must be definded');
   }
   if (!process.env.MONGO_URI) {
-    throw new Error('tickets MONGO_URI must be definded');
+    throw new Error('Orders MONGO_URI must be definded');
   }
   if (!process.env.NATS_CLUSTER_ID) {
-    throw new Error('tickets NATS_CLUSTER_ID must be definded');
+    throw new Error('Orders NATS_CLUSTER_ID must be definded');
   }
   if (!process.env.NATS_CLIENT_ID) {
-    throw new Error('tickets NATS_CLIENT_ID must be definded');
+    throw new Error('Orders NATS_CLIENT_ID must be definded');
   }
   if (!process.env.NATS_URL) {
-    throw new Error('tickets NATS_URL must be definded');
+    throw new Error('Orders NATS_URL must be definded');
   }
 
   try {
