@@ -18,8 +18,9 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
       throw new Error('Ticket not found');
     }
     // use data object version not mongo update if current plugin
-    const { title, price, version } = data;
-    ticket.set({ title, price, version });
+    // add version to data {} and set if not using if current mongo plugin
+    const { title, price } = data;
+    ticket.set({ title, price });
     await ticket.save();
 
     msg.ack();
