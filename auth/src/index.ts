@@ -15,14 +15,14 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log('Connected to Auth mongodb');
+    console.log('🚀 Connected to Auth mongodb');
   } catch (err) {
     console.error(err);
   }
 };
 
 app.listen(3000, () => {
-  console.log('Listening on port 3000');
+  console.log('🚀 Listening on port 3000');
 });
 
 start();
