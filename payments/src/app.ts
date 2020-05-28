@@ -9,7 +9,7 @@ import {
   NotFoundError,
   currentUser,
 } from '@andrewdied-tickets/common';
-
+import { createChargeRouter } from './routes/new';
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
@@ -22,6 +22,8 @@ app.use(
 
 // auth middlewares
 app.use(currentUser);
+// routes
+app.use(createChargeRouter);
 
 // route not found error
 app.all('*', async (req, res) => {
