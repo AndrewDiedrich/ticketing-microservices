@@ -40,7 +40,7 @@ router.post(
       source: token,
       description: `Charge of $${order.price} for ticket:${order.id}`,
     });
-    res.send({ success: true });
+    res.status(201).send({ success: true });
   }
 );
 
