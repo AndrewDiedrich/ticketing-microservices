@@ -14,6 +14,9 @@ declare global {
 // all tests use mock of nats wrapper before tests
 jest.mock('../nats-wrapper');
 
+// real mock stripe
+process.env.STRIPE_KEY = 'sk_test_F32Gdvt2m78ckL6rfMvW61ra00QxplyN4U';
+
 // declare so each hook has access
 let mongo: any;
 // hook function run before all tests
