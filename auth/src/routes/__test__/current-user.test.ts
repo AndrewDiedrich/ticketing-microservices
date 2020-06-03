@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it('responds with details about the current user', async () => {
-  const cookie = await global.signup();
+  const cookie = await global.signin();
   const response = await request(app)
     .get('/api/users/currentuser')
     //set cookie header to the cookie from the authResponse
