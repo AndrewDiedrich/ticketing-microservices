@@ -15,7 +15,8 @@
     "bootstrap": "^4.4.1",
     "next": "^9.4.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-stripe-checkout": "^2.6.3"
   },
   "devDependencies": {
     "@types/node": "^13.13.5",

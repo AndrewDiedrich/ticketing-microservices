@@ -11,11 +11,11 @@ interface IRequestTypes {
 export default ({ url, method, body, onSuccess }: IRequestTypes) => {
   const [errors, setErrors] = useState<any>(null);
 
-  const doRequest = async () => {
+  const doRequest = async (props: any = {}) => {
     try {
       setErrors(null);
       // @ts-ignore
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...props });
 
       // after a successful response
       if (onSuccess) {
