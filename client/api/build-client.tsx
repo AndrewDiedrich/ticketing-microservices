@@ -6,7 +6,9 @@ export default ({ req }: NextPageContext) => {
     // we are on the server
 
     return axios.create({
-      baseURL: `http://ingress-nginx-controller.ingress-nginx.svc.cluster.local`,
+      // prod
+      baseURL: `http://www.ticketing-died-prod.xyz`,
+      // baseURL: `http://ingress-nginx-controller.ingress-nginx.svc.cluster.local`,
       headers: req?.headers,
     });
   } else {
